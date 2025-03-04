@@ -9057,34 +9057,36 @@ What to do today?
             -First of all, this is a super minor problem that I am perfectly capable of structuring my tests to avoid.
         -I wonder if it makes sense to separate user inputs from derived 'inputs'.  My issue is that once the items go into the cart I have no good way of determining if they were added by me or by the logic.  
 
-22 Feb 2025 []
+3 Mar 2025
+    OK, goal for this is to get the test prototype up and running.  Doesn't have to be great, just has to be able to handle tests.  Leaky abstractions are fine because what I'm really hoping to do is get this clear and then handle all the real shit in MRV3.  
 
-    I stunk today.  I played Slay The Spire when I knew damn well that a start like that normally leads to a result like this.  I just couldn't focus.  I wasn't interested.
+    -I need to add the equivalent quantity of New Items to the transaction.
+    -I need to stop the LW items from getting kicked out of the cart, probably by creating a new invoice.
+    -I need to make the quantity of LW items non-deletable.
+    
+    -Do I want to handle the scenario where a Bifrost NRR item is being added?
+        -Probably.  That's probably a good thing to test while we are out there.
 
-    Illinois is playing Duke tonight and I'm anxious.  I fear my tribe is about to make a poor showing.  
+    -So then how do I prevent the cart-kicking?  
+        -I could create a receipt for them, although I would need to do some trickery to keep that receipt from showing up.  
+    
+    I probably also want to display the item as Lifetime Warranty (as opposed to No Receipt) in the table rows.
 
-    I think the correct course for programming is: produce the easiest thing that lets me do the Lifetime Warranty test.  Once that's out of the way I can refactor MRV to my heart's content.
+4 Mar 2025
+    I've been kicking around the idea of adding in one or more PseudoInvos with which to match the items in the cart.
+        -I guess the trouble is that I need to ensure that the PseudoInvos are only matched AFTER the actual invos have all been tried.  
+        -So it looks like the UM invos are just an array.  If I just merge in my pseudo-invos after that point, I think it should only assign them after the fact?
+            -Damn.  That worked, like, SURPRISINGLY well...
+            -I guess I will need to create another dummy item in the lwNum_x_replacementNum format, but that should be fine.
 
-    Here are a few things I'd like to do different.
-        -I want to design all classes around the expectation that everything is going through the LuneLenser.
-            -It should be very easy to compare and merge classes that share a common factor.
-        
-        -I want to do objects and I want them to have true primary keys.  The idea I had was to have a standard naming convention for instance keys:  
+    -OK, here's another wild idea.  If the item is LW, I could just conditionally display the descriptor as LW instead of NRR.  AFAICT, according to the business rules it's a 1:1 replacement.
 
-            history_of_equality_checks.  Each segment is the chronology of differentiators checked.  So it would be:
-                itemNum_returnReason_invoiceNum, where each segment is the differentiator in the repo it came from.  
-
-        And I think oldest => newest makes sense.  First, it should all line up, allowing me to see where it all actually diverged.  It's also really a really easy function that creates it.  Just a template literal that takes the existing key and concatenates the most recent one.  
-        
-        -I feel like the idea of having objects as the universal format makes sense.  IIRC all string keys are stored in insertion order.  
-
-        OK.  Here's what it is.  I feel like I've identified enough commonalities that I can use the same configurable solution to a lot of my problems.  And that's why I'm dragging my feet, because I'm feeling more and more annoyed by my past architecture decisions and I kinda wanna stop working so hard.  
-
-        It's a more refined version of the instinct that led me to start with ReturnAtoms in the first place.  It's hard to connect the data because it wasn't structured with connection in mind.  
+    So then let's do that.  
 
 
 
-    I DO NOT like working on my portfolio.  I can think of 3 ID and 1 big UX runthroughs and it sucks balls every time and the reason this sucks balls is that I have no idea what my counterparts want to see.  I am proud of my work and I want to explain it well and I hate the feeling of rejection and I think I'm subconsciously flinching away from it.  
+    
+
 
 
 

@@ -775,6 +775,7 @@ function useSetSessionInvos() {
 /////////////////         Session Value Derivers       /////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+
 const returnAtomizer = ({
   sessionItemsArr = [],
   sessionInvosObj = {},
@@ -801,6 +802,33 @@ const returnAtomizer = ({
       return thisInvo.itemAtomsArr;
     }
   );
+
+  // These are pseudo invos.  They exists to match items that are returnable but not invoiced.  This is kinda sloppy and I will refactor it in MRV3.
+  const pseudoInvoLW = [
+    new returnAtom({
+      atomItemNum: "6611",
+      atomItemQty: 9999,
+      atomInvoNum: "Lifetime Warranty",
+      atomMoneyObj: new moneyObj({
+        unitBaseValue: 1100,
+      }),
+    }),
+    new returnAtom({
+      atomItemNum: "6622",
+      atomItemQty: 9999,
+      atomInvoNum: "Lifetime Warranty",
+      atomMoneyObj: new moneyObj({
+        unitBaseValue: 1100,
+      }),
+    }),
+  ]
+
+  console.log(aUM_InvoicedItemAtoms);
+
+  aUM_InvoicedItemAtoms = aUM_InvoicedItemAtoms.concat(pseudoInvoLW);
+
+  console.log(aUM_InvoicedItemAtoms);
+
 
   let aUM_ReturnItemAtoms = cloneDeep(sessionItemsArr);
 

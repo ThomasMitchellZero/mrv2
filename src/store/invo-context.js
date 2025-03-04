@@ -374,6 +374,28 @@ const invoiceObj = {
       }),
     ],
   }),
+  "000100": new Invoice_SR({
+    invoNum: "000100",
+    store: 1234,
+    date: new Date(2024, 2, 1),
+    payment: {
+      1111222211112222: {
+        tenderType: tType.credit,
+        tenderLabel: "MasterCard ****2222",
+        paid: 0,
+        ccNum: "1111222211112222",
+      },
+    },
+    itemAtomsArr: [
+      new returnAtom({
+        atomItemNum: "3300",
+        atomItemQty: 3,
+        atomMoneyObj: new moneyObj({
+          unitBaseValue: 599,
+        }),
+      }),
+    ],
+  }),
 
   ///////////////  Uses MoneyObj + Association     ////////////////////////////////
 };
