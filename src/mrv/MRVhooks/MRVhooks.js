@@ -775,7 +775,6 @@ function useSetSessionInvos() {
 /////////////////         Session Value Derivers       /////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-
 const returnAtomizer = ({
   sessionItemsArr = [],
   sessionInvosObj = {},
@@ -829,14 +828,13 @@ const returnAtomizer = ({
         unitBaseValue: 42069, // change to actual price
       }),
     }),
-  ]
+  ];
 
   console.log(aUM_InvoicedItemAtoms);
 
   aUM_InvoicedItemAtoms = aUM_InvoicedItemAtoms.concat(pseudoInvoLW);
 
   console.log(aUM_InvoicedItemAtoms);
-
 
   let aUM_ReturnItemAtoms = cloneDeep(sessionItemsArr);
 
@@ -1088,7 +1086,7 @@ export { atomRelationizer };
 
 const newItemAtomizer = ({ atomizedReturnItemsArr = [], newItemsArr }) => {
   const baseComparisonFn = ({ repo1Atom, repo2Atom }) => {
-    return repo1Atom.atomItemNum === repo2Atom.atomItemNum;
+    return repo1Atom.atomItemNum === repo2Atom.atomItemNum || repo1Atom.bifrostEquivalent === repo2Atom.atomItemNum;
   };
 
   let outAtomizedNewItems = [];
@@ -1104,12 +1102,14 @@ const newItemAtomizer = ({ atomizedReturnItemsArr = [], newItemsArr }) => {
       const refAtom = new returnAtom({});
 
       const newVals = {
+        atomItemNum: repo2Atom.atomItemNum,
         peerItem: repo1Atom.atomItemNum,
         transactionType: "likeExch",
+        atomMoneyObj: repo1Atom.atomMoneyObj,
       };
       const outMergedAtom = {
         ...cloneDeep(mergedAtom),
-        ...cloneDeep(repo1Atom),
+        //...cloneDeep(repo1Atom),
         ...newVals,
       };
       const refMoneyObj = new moneyObj({});
@@ -1203,6 +1203,30 @@ function returnAutoDeriver(clonedDraft) {
     sessionItemsArr: outSessionState.returnItems,
     sessionInvosObj: outSessionState.sessionInvos,
   });
+
+  // add LW OoS items to newItems
+  const aLW_OoS = outSessionState.returnItems.filter((thisItem) => {
+    return thisItem.bifrostKey === "00100";
+  });
+  for (const rtrnAtom of aLW_OoS) {
+    const pairedItemNum = rtrnAtom.bifrostEquivalent;
+    let refIndex = locateAtom({
+      itemNum: pairedItemNum,
+      arrToSearch: outSessionState.newItems,
+      asIndex: true,
+    });
+    // if the item is not already in the newItems, add it.
+    if (refIndex === -1) {
+      refIndex = outSessionState.newItems.length;
+      outSessionState.newItems.push(
+        new returnAtom({
+          atomItemNum: pairedItemNum,
+          atomItemQty: 0,
+        })
+      );
+    }
+    outSessionState.newItems[refIndex].atomItemQty = rtrnAtom.atomItemQty;
+  }
 
   // atomize the newItems
   outSessionState.atomizedNewItems = newItemAtomizer({
