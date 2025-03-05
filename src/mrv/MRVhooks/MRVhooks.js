@@ -889,6 +889,8 @@ const returnAtomizer = ({
         const outAtomXinvo = cloneDeep(thisInvoItemAtom);
 
         outAtomXinvo.atomItemQty = nMatchedQty;
+        outAtomXinvo.bifrostKey = thisItemAtom.bifrostKey;
+        outAtomXinvo.bifrostEquivalent = thisItemAtom.bifrostEquivalent;
 
         aAtomizedByInvoice.push(outAtomXinvo);
 
