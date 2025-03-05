@@ -5,7 +5,12 @@ import { centsToDollars, greenify } from "../../../../../mrv/MRVhooks/MRVhooks";
 
 function ItemReceiptRow({ atomizedItem }) {
   // invoStatus will eventually include NRR Lifetime Warranty.
-  const invoStatus = atomizedItem.atomInvoNum ? "receipted" : "needsReceipt";
+  const invoStatus =
+    atomizedItem.atomInvoNum === "Lifetime Warranty"
+      ? "lifetimeWarranty"
+      : atomizedItem.atomInvoNum
+      ? "receipted"
+      : "needsReceipt";
   const moneyObj = atomizedItem.atomMoneyObj;
   const unitBaseValue = moneyObj.unitBaseValue;
   const itemQty = atomizedItem.atomItemQty;
@@ -27,6 +32,14 @@ function ItemReceiptRow({ atomizedItem }) {
       iconStr: "alert",
       unitVal: "- -",
       totalVal: "- -",
+    },
+    lifetimeWarranty: {
+      invoStr: `#${atomizedItem.atomInvoNum}`,
+      invoColor: "color__tertiary__text",
+      color: greenify(unitBaseValue),
+      iconStr: "shield",
+      unitVal: `$${centsToDollars(unitBaseValue)}`,
+      totalVal: `$${centsToDollars(totalValue)}`,
     },
   };
 

@@ -1,5 +1,5 @@
 import "./DescriptorIcon.css";
-import { FaBoxOpen, FaBarcode } from "react-icons/fa6";
+import { FaBoxOpen, FaBarcode, FaShieldHalved } from "react-icons/fa6";
 import {
   MdReceiptLong,
   MdOutlineShoppingCart,
@@ -37,6 +37,7 @@ function DescriptorIcon({
     success: <MdCheckCircle {...styleObj} />,
     critical: <MdOutlineRemoveCircle {...styleObj} />,
     barcode: <FaBarcode {...styleObj} />,
+    shield: <FaShieldHalved {...styleObj} />,
   };
 
   const outIcon = iconsObj[iconStr] || iconsObj.sick;

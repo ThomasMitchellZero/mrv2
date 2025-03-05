@@ -821,6 +821,14 @@ const returnAtomizer = ({
         unitBaseValue: 1100,
       }),
     }),
+    new returnAtom({
+      atomItemNum: "00100X5500", // change segment after 'X' to the actual itemNum
+      atomItemQty: 9999,
+      atomInvoNum: "Lifetime Warranty",
+      atomMoneyObj: new moneyObj({
+        unitBaseValue: 42069, // change to actual price
+      }),
+    }),
   ]
 
   console.log(aUM_InvoicedItemAtoms);

@@ -2,7 +2,7 @@
   & .msgRibbon {
     display: flex;
     flex-direction: row;
-    flex: 0 0 1rem;
+    flex: 1 1 0rem;
     padding: 0.5rem;
     padding-left: 0.25rem;
     border-radius: 0.5rem;
@@ -21,5 +21,6 @@
       flex: 0 0 auto;
       height: 1.5rem;
     }
+
   }
 }

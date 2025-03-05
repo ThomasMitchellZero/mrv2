@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router";
 import { MRVitemDetails } from "../../../../../mrv/mrv-components/DisplayOutputs/mrvItemDetails";
 import { MRVinput } from "../../../../../mrv/mrv-components/inputs/MRVinput";
+import { MessageRibbonMRV } from "../../../../../mrv/mrv-components/DisplayOutputs/MessageRibbonMRV";
 import { ReasonBadgeSTRX } from "../../../_resources/components/CompConfigsSTRX";
 import { ItemReceiptRow } from "./ItemReceiptRow";
 import { useLocStMethods_STRX } from "../../../_resources/components/CompHooks_STRX";
@@ -58,6 +59,8 @@ const RtrnItemCard = ({ returnItemAtom }) => {
     valueInCents: cardTotalVal,
   });
 
+  // Msg Ribbons for the card. /////////////////////////////
+
   // local function for handling qty changes.
   const handleQtyChange = (e, atomizedItem) => {
     const newQty = e.target.value;
@@ -112,6 +115,30 @@ const RtrnItemCard = ({ returnItemAtom }) => {
       );
     });
 
+    // Message Ribbon Handling ////////////////////////
+    const iBifrostLwNrr = aInfoRows.find((thisAtom) => {
+      
+      return (
+        thisAtom.atomInvoNum === "Lifetime Warranty" &&
+        thisAtom.bifrostKey !== "00100"
+      );
+    })?.atomItemQty;
+
+    console.log("iBifrostLwNrr", iBifrostLwNrr);
+
+    if (iBifrostLwNrr > 0) {
+      console.log("Tryna push");
+      aInfoRowsUI.push(
+        <div key={"bifrostLwNrr"} className={"invoInfoRow merged"}>
+          <MessageRibbonMRV
+            key={"bifrostLwNrr"}
+            message={`${iBifrostLwNrr}x identical exchange only`}
+            type="alert"
+          />
+        </div>
+      );
+    }
+
     return (
       <div
         key={`${tileItemAtom.primaryKey}tile`}
@@ -124,7 +151,6 @@ const RtrnItemCard = ({ returnItemAtom }) => {
             showQty={false}
             thisItemAtom={tileItemAtom}
             descriptionLineLimit={2}
-            
           />
         </div>
         <div className={"rowCol totalQtyCol"}>
