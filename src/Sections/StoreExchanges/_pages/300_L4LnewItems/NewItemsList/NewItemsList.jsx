@@ -31,7 +31,10 @@ function NewItemsList() {
 
   return aNewItems.length ? (
     <div className={`cardContainer`}>
-      <MessageRibbonMRV message={uiRibbonStr} type="info" />
+      <div className={`hBox minFlex maxWidth`}>
+        <MessageRibbonMRV message={uiRibbonStr} type="info" />
+      </div>
+
       <div className={`columnTitleRow spanCtnr`}>
         <div className={`tileSpan`}>
           <div className={`itemSpan`}>New Items Cart</div>

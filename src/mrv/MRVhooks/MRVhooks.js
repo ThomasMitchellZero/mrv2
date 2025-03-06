@@ -1204,30 +1204,6 @@ function returnAutoDeriver(clonedDraft) {
     sessionInvosObj: outSessionState.sessionInvos,
   });
 
-  // add LW OoS items to newItems
-  const aLW_OoS = outSessionState.returnItems.filter((thisItem) => {
-    return thisItem.bifrostKey === "00100";
-  });
-  for (const rtrnAtom of aLW_OoS) {
-    const pairedItemNum = rtrnAtom.bifrostEquivalent;
-    let refIndex = locateAtom({
-      itemNum: pairedItemNum,
-      arrToSearch: outSessionState.newItems,
-      asIndex: true,
-    });
-    // if the item is not already in the newItems, add it.
-    if (refIndex === -1) {
-      refIndex = outSessionState.newItems.length;
-      outSessionState.newItems.push(
-        new returnAtom({
-          atomItemNum: pairedItemNum,
-          atomItemQty: 0,
-        })
-      );
-    }
-    outSessionState.newItems[refIndex].atomItemQty = rtrnAtom.atomItemQty;
-  }
-
   // atomize the newItems
   outSessionState.atomizedNewItems = newItemAtomizer({
     atomizedReturnItemsArr: outSessionState.atomizedReturnItems,

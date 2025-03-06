@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import {
   returnAtom,
   baseLocState,
@@ -48,6 +49,64 @@ function useLocStMethods_STRX() {
 
     const mrvMethods = useCompHooks_MRV().oReasonPicker_SC();
 
+    const populateNewItems = () => {
+      // add LW OoS items to newItems.  This is crap code but I need it done.  Sorry future me.
+
+      const refAtom = new returnAtom({});
+      const outSessionState = cloneDeep(sessionMRV);
+      // locate all items that are LW OoS
+      const aLW_OoS = outSessionState.returnItems.filter((thisItem) => {
+        return thisItem.bifrostKey === "00100";
+      });
+
+      for (const rtrnAtom of aLW_OoS) {
+        const pairedItemNum = rtrnAtom.bifrostEquivalent;
+        let newAtomIndex = outSessionState.newItems.findIndex(
+          (newItem) => {
+            return newItem.atomItemNum === pairedItemNum;
+          }
+        );
+
+        if (newAtomIndex === -1) {
+          newAtomIndex = outSessionState.newItems.length;
+          outSessionState.newItems.push(
+            new returnAtom({
+              atomItemNum: pairedItemNum,
+              atomItemQty: 0,
+            })
+          );
+        }
+        outSessionState.newItems[newAtomIndex].atomItemQty =
+          rtrnAtom.atomItemQty;
+      }
+
+      return outSessionState
+
+      /*
+            for (const rtrnAtom of aLW_OoS) {
+        const pairedItemNum = rtrnAtom.bifrostEquivalent;
+        let refIndex = locateAtom({
+          itemNum: pairedItemNum,
+          arrToSearch: outSessionState.newItems,
+          asIndex: true,
+        });
+        // if the item is not already in the newItems, add it.
+        if (refIndex === -1) {
+          refIndex = outSessionState.newItems.length;
+          outSessionState.newItems.push(
+            new returnAtom({
+              atomItemNum: pairedItemNum,
+              atomItemQty: 0,
+            })
+          );
+        }
+        outSessionState.newItems[refIndex].atomItemQty = rtrnAtom.atomItemQty;
+      }
+      */
+    };
+
+    //////////////////////////////////////////////////////////////
+
     const lsMethods = {
       basicClear: () => {
         console.log("Ya Basic");
@@ -83,15 +142,18 @@ function useLocStMethods_STRX() {
             activeError1: pageLocSt.oErrorObjects["invalidReturnReasons"],
           });
         } else if (hasNRR) {
-          //no-receipt
-          console.log;
+
+          setSession(populateNewItems());
           resetPageLS({ EVERYONE: true });
           nodeNav("returnRejection");
+          
         } else {
+          setSession(populateNewItems());
           resetPageLS({ activeErrorALL: true });
           resetAllEntry30LS({ activeErrorALL: true });
           resetReasonPickerLS({ activeErrorALL: true });
           nodeNav("newitems");
+          
         }
       },
 
@@ -154,13 +216,39 @@ function useLocStMethods_STRX() {
         });
       },
 
+      itemReturnPeerQty: (newItemAtom) => {
+        const aReturnPeers = sessionMRV.returnItems.filter((rtrnAtom) => {
+          return (
+            rtrnAtom.atomItemNum === newItemAtom.atomItemNum ||
+            rtrnAtom.bifrostEquivalent === newItemAtom.atomItemNum
+          );
+        });
+
+        const iReturnItemQty = aReturnPeers.reduce((acc, atom) => {
+          return acc + atom.atomItemQty;
+        }, 0);
+
+        return iReturnItemQty;
+      },
+
       itemExchStatus: (itemAtom) => {
         // eventually this will use the atomizedNewItems array.
         const outObj = {};
 
+        const aReturnPeers = sessionMRV.returnItems.filter((rtrnAtom) => {
+          return (
+            rtrnAtom.atomItemNum === itemAtom.atomItemNum ||
+            rtrnAtom.bifrostEquivalent === itemAtom.atomItemNum
+          );
+        });
+
+        const iReturnItemQty = aReturnPeers.reduce((acc, atom) => {
+          return acc + atom.atomItemQty;
+        }, 0);
+
         const returnItemQty =
           findAtom({
-            itemNum: itemAtom.atomItemNum,
+            itemNum: itemAtom.peerItem,
             itemsArr: sessionMRV.returnItems,
             asIndex: false,
           }).atomItemQty || 0;
@@ -169,7 +257,7 @@ function useLocStMethods_STRX() {
         const tileQty = itemAtom.atomItemQty;
 
         outObj.qtyStatus =
-          returnItemQty === tileQty
+          iReturnItemQty === tileQty
             ? "valid"
             : !returnItemQty
             ? "noReturn"
