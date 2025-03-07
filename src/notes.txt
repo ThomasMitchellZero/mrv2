@@ -9092,6 +9092,17 @@ What to do today?
 
     And I think that's it?
 
+    OK.  Getting a little hairy here.  I'm failing to find peers because I'm building the list from the NewItems, but newItems don't contain info on peer items.  It's just a raw input.  So these are my options:
+        -Sling some more spaghetti and calculate the total by hand OR
+        -Figure out how to re-condense atomized New Items and build my list from there.  
+
+    For fuck's sake.  I can't include it in the auto-deriver because that quantity gets reset every time the state changes.  God fucking damn it.  
+
+6 Mar 2025
+    OK.  Let's just get this over the finish line.  First, gotta move the item-adding out of the auto-deriver.  I *think* I can just do it on Continue from AddItemsAndInvos.  
+
+7 Mar 2025
+    Items are now added correctly.  They are also showing up correctly, although the quantity is getting weird.  
 
 
 
