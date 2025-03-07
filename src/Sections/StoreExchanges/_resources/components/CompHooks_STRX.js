@@ -62,11 +62,9 @@ function useLocStMethods_STRX() {
 
       for (const rtrnAtom of aLW_OoS) {
         const pairedItemNum = rtrnAtom.bifrostEquivalent;
-        let newAtomIndex = outSessionState.newItems.findIndex(
-          (newItem) => {
-            return newItem.atomItemNum === pairedItemNum;
-          }
-        );
+        let newAtomIndex = outSessionState.newItems.findIndex((newItem) => {
+          return newItem.atomItemNum === pairedItemNum;
+        });
 
         if (newAtomIndex === -1) {
           newAtomIndex = outSessionState.newItems.length;
@@ -81,7 +79,7 @@ function useLocStMethods_STRX() {
           rtrnAtom.atomItemQty;
       }
 
-      return returnAutoDeriver(outSessionState) 
+      return returnAutoDeriver(outSessionState);
 
       /*
             for (const rtrnAtom of aLW_OoS) {
@@ -143,18 +141,15 @@ function useLocStMethods_STRX() {
             activeError1: pageLocSt.oErrorObjects["invalidReturnReasons"],
           });
         } else if (hasNRR) {
-
           setSession(populateNewItems());
           resetPageLS({ EVERYONE: true });
           nodeNav("returnRejection");
-          
         } else {
           setSession(populateNewItems());
           resetPageLS({ activeErrorALL: true });
           resetAllEntry30LS({ activeErrorALL: true });
           resetReasonPickerLS({ activeErrorALL: true });
           nodeNav("newitems");
-          
         }
       },
 
@@ -232,35 +227,38 @@ function useLocStMethods_STRX() {
         return iReturnItemQty;
       },
 
-      itemExchStatus: (itemAtom) => {
+      itemExchStatus: (newItemAtom) => {
         // eventually this will use the atomizedNewItems array.
         const outObj = {};
 
         const aReturnPeers = sessionMRV.returnItems.filter((rtrnAtom) => {
           return (
-            rtrnAtom.atomItemNum === itemAtom.atomItemNum ||
-            rtrnAtom.bifrostEquivalent === itemAtom.atomItemNum
+            rtrnAtom.atomItemNum === newItemAtom.atomItemNum ||
+            rtrnAtom.bifrostEquivalent === newItemAtom.atomItemNum
           );
         });
 
-        const iReturnItemQty = aReturnPeers.reduce((acc, atom) => {
-          return acc + atom.atomItemQty;
+        const iReturnItemQty = aReturnPeers.reduce((acc, rtrnAtom) => {
+          return acc + rtrnAtom.atomItemQty;
         }, 0);
 
-        const returnItemQty =
+        outObj.returnItemQty = iReturnItemQty;
+        /*
+                const returnItemQty =
           findAtom({
             itemNum: itemAtom.peerItem,
             itemsArr: sessionMRV.returnItems,
             asIndex: false,
           }).atomItemQty || 0;
         outObj.returnItemQty = returnItemQty;
+        */
 
-        const tileQty = itemAtom.atomItemQty;
+        const tileQty = newItemAtom.atomItemQty;
 
         outObj.qtyStatus =
           iReturnItemQty === tileQty
             ? "valid"
-            : !returnItemQty
+            : !iReturnItemQty
             ? "noReturn"
             : "mismatchQty";
 

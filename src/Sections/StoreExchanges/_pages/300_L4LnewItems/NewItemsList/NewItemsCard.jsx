@@ -38,8 +38,8 @@ function NewItemCardSTRX({ itemAtom = new returnAtom({}) }) {
 
   const aLikeAtoms = sessionMRV.atomizedNewItems.filter((atom) => {
     const isMatch =
-      atom.atomItemNum === itemAtom.atomItemNum &&
-      atom.transactionType === "likeExch";
+      atom.atomItemNum === itemAtom.atomItemNum 
+      // && atom.transactionType === "likeExch";
     return isMatch;
   });
 
