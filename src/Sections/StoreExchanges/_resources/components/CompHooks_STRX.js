@@ -15,6 +15,7 @@ import {
   useFindAtom,
   useNodeNav,
   useSetSessionItems,
+  returnAutoDeriver,
 } from "../../../../mrv/MRVhooks/MRVhooks";
 
 import { useOutletContext } from "react-router";
@@ -80,7 +81,7 @@ function useLocStMethods_STRX() {
           rtrnAtom.atomItemQty;
       }
 
-      return outSessionState
+      return returnAutoDeriver(outSessionState) 
 
       /*
             for (const rtrnAtom of aLW_OoS) {

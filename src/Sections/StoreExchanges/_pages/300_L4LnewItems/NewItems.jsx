@@ -67,12 +67,16 @@ function NewItems() {
 
   /* ---- SHARED FUNCTIONS ---- */
 
+  const refAtom = new returnAtom({});
   // check for unpaired items.  This affects the route for the Continue button.
   const atomizedForPeers = primaryAtomizer({
     repo1: sessionMRV.returnItems,
     repo2: sessionMRV.newItems,
     comparisonFn: ({ repo1Atom, repo2Atom }) => {
-      return repo1Atom.atomItemNum === repo2Atom.atomItemNum;
+      return (
+        repo1Atom.atomItemNum === repo2Atom.atomItemNum ||
+        repo1Atom.bifrostEquivalent === repo2Atom.bifrostKey
+      );
     },
   });
 
