@@ -809,28 +809,26 @@ const returnAtomizer = ({
       atomItemQty: 9999,
       atomInvoNum: "Lifetime Warranty",
       atomMoneyObj: new moneyObj({
-        unitBaseValue: 1100,
+        unitBaseValue: 950,
       }),
     }),
     new returnAtom({
-      atomItemNum: "6622",
-      atomItemQty: 9999,
+      atomItemNum: "6612",
+      atomItemQty: 850,
       atomInvoNum: "Lifetime Warranty",
       atomMoneyObj: new moneyObj({
-        unitBaseValue: 1100,
+        unitBaseValue: 866,
       }),
     }),
     new returnAtom({
-      atomItemNum: "00100X5500", // change segment after 'X' to the actual itemNum
+      atomItemNum: "00100X6612", // change segment after 'X' to the actual itemNum
       atomItemQty: 9999,
       atomInvoNum: "Lifetime Warranty",
       atomMoneyObj: new moneyObj({
-        unitBaseValue: 42069, // change to actual price
+        unitBaseValue: 850, // change to actual price
       }),
     }),
   ];
-
-  console.log(aUM_InvoicedItemAtoms);
 
   aUM_InvoicedItemAtoms = aUM_InvoicedItemAtoms.concat(pseudoInvoLW);
 
