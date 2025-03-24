@@ -30,8 +30,8 @@ import walloutlet from "../assets/product-images/walloutlet.png";
 import paintstick from "../assets/product-images/paintstick.png";
 import windowscraper from "../assets/product-images/windowscraper.png";
 import lifetime_warranty from "../assets/product-images/lifetime_warranty.png";
-import kobalt_hammer_2 from "../assets/product-images/kobalt_hammer.png";
-import craftsman_pliers from "../assets/product-images/craftsman_screwdriver_2.png";
+import kobalt_hammer_2 from "../assets/product-images/kobalt_hammer_2.png";
+import craftsman_pliers from "../assets/product-images/craftsman_pliers.png";
 import { Product } from "../globalFunctions/globalJS_classes";
 
 const ProductContext = React.createContext({
@@ -338,14 +338,6 @@ const ProductContext = React.createContext({
     itemNum: "5500",
     modelNum: "DR3345",
     description: "Warner 1.5-in Steel Paint Scraper",
-  }),
-
-  6611: new Product({
-    img: paintstick,
-    price: 1100,
-    itemNum: "6611",
-    modelNum: "DR3345",
-    description: "LW PLaceholder #2",
   }),
 
   6622: new Product({

@@ -1104,6 +1104,7 @@ const newItemAtomizer = ({ atomizedReturnItemsArr = [], newItemsArr }) => {
         peerItem: repo1Atom.atomItemNum,
         transactionType: "likeExch",
         atomMoneyObj: repo1Atom.atomMoneyObj,
+        bifrostKey: repo2Atom.bifrostKey,
       };
       const outMergedAtom = {
         ...cloneDeep(mergedAtom),
