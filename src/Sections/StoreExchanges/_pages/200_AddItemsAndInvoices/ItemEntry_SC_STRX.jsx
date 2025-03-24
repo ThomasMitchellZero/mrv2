@@ -6,7 +6,7 @@ import { useOutletContext } from "react-router";
 import { useContext } from "react";
 
 import { cloneDeep, isEmpty } from "lodash";
-
+import { MdChevronRight } from "react-icons/md";
 import {
   returnAtom,
   locStFields,
@@ -134,10 +134,16 @@ const ItemEntry_SC_STRX = ({}) => {
       <p className={`warning`}>{activeErrorStr}</p>
 
       <div className={`divider horizontal`} />
-      <div className={`hBox maxFlex justifyEnd`}>
-        <button type="button" onClick={handleLwBtn}>
-          Lifetime Warranty Item
-        </button>
+      <div className={`vBox minFlex maxWidth gap1rem`}>
+        <div className={`hBox minFlex body__small color__primary__text`}>
+          Add Lifetime Warranty item not listed in system.
+        </div>
+        <div className={`hBox maxFlex justifyEnd`}>
+          <button type="button" className={`secondary`} onClick={handleLwBtn}>
+            Unlisted Item
+            <MdChevronRight size="2rem" />
+          </button>
+        </div>
       </div>
     </form>
   );

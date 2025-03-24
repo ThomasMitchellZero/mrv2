@@ -352,7 +352,7 @@ const ProductContext = React.createContext({
     price: 900,
     itemNum: "6611",
     modelNum: "DR3345",
-    description: "LW PLaceholder #2",
+    description: "Kobalt 16-oz Smoothed Face Steel Claw Hammer",
   }),
 
   6612: new Product({
@@ -360,7 +360,7 @@ const ProductContext = React.createContext({
     price: 800,
     itemNum: "6612",
     modelNum: "DR3345",
-    description: "LW PLaceholder #2",
+    description: "Craftsman 6-in Slip Joint Pliers",
   }),
 });
 
