@@ -69,7 +69,6 @@ function StartSTRX() {
 
   return (
     <section className={`mrvPage`}>
-
       <section className={`mrvPanel__main`}>
         <TitleBarSTRX
           showNavNodeBar={true}
@@ -79,7 +78,7 @@ function StartSTRX() {
           <button
             type="button"
             onClick={() => {
-              nodeNav("replacementCheck");
+              nodeNav("appEntry");
             }}
             className={`mrvBtn primary`}
           >
