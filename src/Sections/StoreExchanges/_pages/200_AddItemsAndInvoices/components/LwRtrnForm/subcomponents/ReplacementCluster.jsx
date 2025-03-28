@@ -93,7 +93,6 @@ function ReplacementCluster({ showOnlyIf = true }) {
     const repBifrostText =
       bifrostCtx[lwLocSt.activeData1.atomItemNum].description;
     // creating the LW Return item.
-    // XXX at the moment, this contains no reference to the replacement.
     const outItemAtom = new returnAtom({
       atomItemNum: `00100X${lwLocSt.activeData1.bifrostKey}`,
       //atomItemQty: lwLocSt.input3,

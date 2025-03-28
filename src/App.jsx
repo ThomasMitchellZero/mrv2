@@ -39,6 +39,7 @@ import { ExchReceiptPage } from "./Sections/Exchanges/_pages/70_ReceiptPage/Rece
 //STRX
 import { StoreExchanges } from "./Sections/StoreExchanges/StoreExchanges";
 import { StartSTRX } from "./Sections/StoreExchanges/_pages/100_StartSTRX/StartSTRX";
+import { AppEntry } from "./Sections/StoreExchanges/_pages/120_ExchEntry/AppEntry";
 import { ReplacementCheck } from "./Sections/StoreExchanges/_pages/150_ItemCheck/ReplacementCheck";
 import { AddItemsAndInvosSTRX } from "./Sections/StoreExchanges/_pages/200_AddItemsAndInvoices/AddItemsAndInvosSTRX";
 import { NewItems } from "./Sections/StoreExchanges/_pages/300_L4LnewItems/NewItems";
@@ -109,6 +110,7 @@ function App() {
           </Route>
           <Route path="store-exchanges" element={<StoreExchanges />}>
             <Route index element={<StartSTRX />} />
+            <Route path="app-entry" element={<AppEntry />} />
             <Route path="mrv-menu" element={<AddItemsAndInvosSTRX />} />
             <Route path="replacement-check" element={<ReplacementCheck />} />
             <Route

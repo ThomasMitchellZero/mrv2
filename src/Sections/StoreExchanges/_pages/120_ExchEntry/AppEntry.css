@@ -1,0 +1,11 @@
+
+.mrv{
+    & .appEntry{
+        & .appTile{
+            & img{
+                
+            }
+        }
+
+    }
+}

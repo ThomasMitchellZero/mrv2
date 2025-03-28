@@ -25,6 +25,11 @@ const defaultNavNodesSTRX = {
     titleStr: "Start",
     routeStr: "/store-exchanges",
   }),
+  AppEntry: navNode({
+    keyStr: "AppEntry",
+    titleStr: "App Entry",
+    routeStr: "/store-exchanges/app-entry",
+  }),
   replacementCheck: navNode({
     keyStr: "replacementCheck",
     titleStr: "Replacement Check",
